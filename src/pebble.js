@@ -15,8 +15,12 @@ Pebble.addEventListener("webviewclosed",
   function(e) {
     //Get JSON dictionary
     var configuration = JSON.parse(decodeURIComponent(e.response));
-    console.log("Configuration window returned: " + JSON.stringify(configuration));
 
+		configuration.text1 = configuration.text1.replace(/\$/g,"%");
+		configuration.text2 = configuration.text2.replace(/\$/g,"%");
+		
+		console.log("Configuration window returned: " + JSON.stringify(configuration));
+		
     //Send to Pebble, persist there
     Pebble.sendAppMessage(
       {

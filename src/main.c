@@ -80,14 +80,14 @@ persist settings = {
 	.change			= true,
 	
 	//target date
-	.year				= 2015,
+	.year				= 2016,
 	.mon				= 6,
 	.day 				= 8,
 	.hour				= 10,
 	.min				= 0,
 	.sec				= 0,
-	.text1			= "Krissis Geburtstag",
-	.text2			= "ist genau in:"
+	.text1			= "Krissis birthday",
+	.text2			= "is just in:"
 };
 
 int old_year 	= 0;
@@ -104,7 +104,7 @@ static void savePersistentSettings() {
   valueWritten = persist_write_data(SETTINGS_KEY, &settings, sizeof(settings));
 }
 
-//------------------------------------------- update time
+//------------------------------------------- update time & vibe
 
 static void update_time() {
   // Get a tm structure
@@ -142,16 +142,17 @@ static void update_time() {
 	}
 	//APP_LOG(APP_LOG_LEVEL_DEBUG, "rawtime: %d", raw_time);
 	
-	sec				= raw_time % 60;
-  raw_time 	= (raw_time - sec)/60;
-	min 			= raw_time % 60;
-  raw_time 	= (raw_time - min)/60;
-	hour			= raw_time % 24;
-	raw_time 	= (raw_time - hour) /24;
-	day				= raw_time;
-	year			= day / 365;
-	day				= day - (year * 365);
+	sec							= raw_time % 60;
+  int temp_time 	= (raw_time - sec)/60;
+	min 						= temp_time % 60;
+  temp_time 			= (temp_time - min)/60;
+	hour						= temp_time % 24;
+	temp_time 			= (temp_time - hour) /24;
+	day							= temp_time;
+	year						= day / 365;
+	day							= day - (year * 365);
 	
+	//test text fill
 	//char s_day[] = "Days ";
 	//char s_hour[]= "h";
 	//char s_min[] = "min";
@@ -245,8 +246,12 @@ static void update_time() {
 	}
 	
 	//write the textlines
-	snprintf(buffer3_1, sizeof(settings.text1), "%s", settings.text1);
-	snprintf(buffer4_1, sizeof(settings.text2), "%s", settings.text2);
+	//time_t temp2 = time(NULL); 
+  struct tm *tick_time = localtime(&temp);
+	strftime(buffer3_1, sizeof(settings.text1), settings.text1, tick_time);
+	strftime(buffer4_1, sizeof(settings.text1), settings.text2, tick_time);
+	//snprintf(buffer3_1, sizeof(settings.text1), "%s", settings.text1);
+	//snprintf(buffer4_1, sizeof(settings.text2), "%s", settings.text2);
 
 	if(settings.change){	//settings.change
 		//APP_LOG(APP_LOG_LEVEL_DEBUG, "change %d", oversize);
@@ -294,8 +299,44 @@ static void update_time() {
 	text_layer_set_text(s_1_layer0, buffer0_1);
 	text_layer_set_text(s_2_layer0, buffer0_2);
 	
+	
+	
+	//vibe
 	if(settings.vibe){ //settings.vibe
-	//day
+	
+		//use raw_time
+		//vibe secound
+		if(raw_time == 0){vibes_long_pulse();}			//0 sec left
+		if(raw_time == 1){vibes_short_pulse();}			//1 sec
+		if(raw_time == 2){vibes_short_pulse();}			//2 sec
+		if(raw_time == 3){vibes_short_pulse();}
+		if(raw_time == 4){vibes_short_pulse();}
+		if(raw_time == 5){vibes_short_pulse();}
+		if(raw_time == 10){vibes_short_pulse();}
+		if(raw_time == 30){vibes_short_pulse();}		//30 sec
+		
+		//vibe minutes
+		if(raw_time == 60){vibes_short_pulse();}		//1 min
+		if(raw_time == 120){vibes_short_pulse();}		//2 min
+		if(raw_time == 300){vibes_short_pulse();}		//5 min
+		if(raw_time == 600){vibes_short_pulse();}		//10 min
+		if(raw_time == 1800){vibes_short_pulse();}	//30 min
+		
+		//vibe hour
+		if(raw_time == 3600){vibes_short_pulse();}	//1 h
+		if(raw_time == 21600){vibes_short_pulse();}	//6 h
+		if(raw_time == 43200){vibes_short_pulse();}	//12 h
+		
+		//vibe days
+		if(raw_time == 86400){vibes_short_pulse();}	//1 day
+		if(raw_time == 604800){vibes_short_pulse();}	//7 days
+		if(raw_time == 1209600){vibes_short_pulse();}	//14 days
+		if(raw_time == 2678400){vibes_short_pulse();}	//31 days
+		if(raw_time == 8640000){vibes_short_pulse();} //100 days
+		
+		
+		/* //old incorret vibe calc
+		//day
 		if(year == 0){
 			if(day == 100 && day != old_day){
 				 vibes_short_pulse();
@@ -368,13 +409,15 @@ static void update_time() {
 				}
 			}
 		}
+		*/
 	}
 		
-	old_year 	= year;
-	old_day		= day;
-	old_hour	= hour;
-	old_min		= min;
-	old_sec		= sec;
+	//not used anymore
+	//old_year 	= year;
+	//old_day		= day;
+	//old_hour	= hour;
+	//old_min		= min;
+	//old_sec		= sec;
 }
 
 //------------------------------------------------------- Sync callback

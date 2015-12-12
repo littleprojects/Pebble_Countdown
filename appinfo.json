@@ -33,7 +33,7 @@
     "shortName": "Countdown",
     "uuid": "4e07ff93-bbf4-4f67-82b4-248189a3d63f",
     "versionCode": 1,
-    "versionLabel": "1.0",
+    "versionLabel": "2.0",
     "watchapp": {
         "watchface": true
     }
