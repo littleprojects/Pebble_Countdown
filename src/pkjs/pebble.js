@@ -7,7 +7,7 @@ Pebble.addEventListener("ready",
 Pebble.addEventListener("showConfiguration",
   function(e) {
     //Load the remote config page
-    Pebble.openURL("https://dl.dropboxusercontent.com/u/46109611/Pebble/countdown/count_config_v1.html");
+    Pebble.openURL("http://51015977.de.strato-hosting.eu/pebble/countdown/count_config_v1.html");
   }
 );
 

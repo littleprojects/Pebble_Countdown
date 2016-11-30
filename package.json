@@ -1,0 +1,50 @@
+{
+    "author": "David",
+    "dependencies": {},
+    "keywords": [],
+    "name": "countdown",
+    "pebble": {
+        "capabilities": [
+            "configurable"
+        ],
+        "displayName": "Countdown",
+        "enableMultiJS": false,
+        "messageKeys": {
+            "KEY_DAY": 6,
+            "KEY_DAY_END": 2,
+            "KEY_DAY_START": 1,
+            "KEY_HOUR": 7,
+            "KEY_MIN": 8,
+            "KEY_MODE": 0,
+            "KEY_MON": 5,
+            "KEY_SEC": 9,
+            "KEY_TEXT1": 10,
+            "KEY_TEXT2": 11,
+            "KEY_VIBE": 3,
+            "KEY_YEAR": 4
+        },
+        "projectType": "native",
+        "resources": {
+            "media": [
+                {
+                    "file": "images/index2.png",
+                    "menuIcon": true,
+                    "name": "IMAGE_ICON",
+                    "targetPlatforms": null,
+                    "type": "png"
+                }
+            ]
+        },
+        "sdkVersion": "3",
+        "targetPlatforms": [
+            "aplite",
+            "basalt",
+            "diorite"
+        ],
+        "uuid": "4e07ff93-bbf4-4f67-82b4-248189a3d63f",
+        "watchapp": {
+            "watchface": true
+        }
+    },
+    "version": "2.1.0"
+}

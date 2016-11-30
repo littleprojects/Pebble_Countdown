@@ -12,7 +12,7 @@
 ////////////////////////////////////////////////////////////////////
 
 #include <pebble.h>
-#include <PDUtils.h>
+#include "src/c/PDUtils.h"
 	
 #define SETTINGS_KEY 95
   
